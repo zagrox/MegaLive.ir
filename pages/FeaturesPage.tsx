@@ -49,7 +49,7 @@ const FeaturesPage: React.FC = () => {
                 </div>
                 <div className="mr-3 flex-1 min-w-0">
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">{file.name}</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">{file.size} • {new Date().toLocaleDateString('fa-IR')}</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">{new Date().toLocaleDateString('fa-IR')}</p>
                 </div>
                 <div className="shrink-0">
                    {file.status === 'ready' ? (
@@ -95,7 +95,7 @@ const FeaturesPage: React.FC = () => {
                     <div>
                          <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">نام بات</label>
                          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-300">
-                             دستیار مگا لایو
+                             دستیار مگالایو
                          </div>
                     </div>
                      <div>
@@ -218,7 +218,7 @@ const FeaturesPage: React.FC = () => {
             <span className="text-brand-600 dark:text-brand-400">چت‌بات حرفه‌ای</span> نیاز دارید
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            از تبدیل خودکار اسناد تا تحلیل رفتار کاربران؛ مگا لایو مجموعه‌ای کامل از ابزارهایی است که پشتیبانی مشتریان شما را متحول می‌کند.
+            از تبدیل خودکار اسناد تا تحلیل رفتار کاربران؛ مگالایو مجموعه‌ای کامل از ابزارهایی است که پشتیبانی مشتریان شما را متحول می‌کند.
           </p>
         </div>
       </section>

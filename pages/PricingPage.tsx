@@ -126,7 +126,7 @@ const PricingPage: React.FC = () => {
        <section className="py-20 bg-white dark:bg-slate-950">
          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="text-center mb-12">
-             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">چرا مگا لایو؟</h2>
+             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">چرا مگالایو؟</h2>
              <p className="text-slate-600 dark:text-slate-400">
                 دلایلی که ما را به بهترین انتخاب برای کسب‌وکار شما تبدیل می‌کند.
              </p>

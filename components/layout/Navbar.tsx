@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
               <Sparkles className="h-6 w-6" />
             </div>
             <span className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white">
-              مگا <span className="text-brand-500">لایو</span>
+              مگا<span className="text-brand-500">لایو</span>
             </span>
           </Link>
 

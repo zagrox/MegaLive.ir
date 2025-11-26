@@ -17,7 +17,7 @@ const Integrations: React.FC = () => {
             با ابزارهای محبوب شما یکپارچه می‌شود
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-12">
-            مگا لایو را به راحتی به اکوسیستم نرم‌افزاری خود متصل کنید و گردش کار خود را خودکار سازید.
+            مگالایو را به راحتی به اکوسیستم نرم‌افزاری خود متصل کنید و گردش کار خود را خودکار سازید.
           </p>
           <div className="relative">
             <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-slate-200 dark:bg-slate-800"></div>

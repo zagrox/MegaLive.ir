@@ -49,7 +49,7 @@ const Home: React.FC = () => {
                   <div>
                     <h3 className="font-bold text-slate-900 dark:text-white mb-2">مکالمات طبیعی</h3>
                     <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                      بر خلاف چت‌بات‌های قدیمی، مگا لایو مفهوم جملات را درک می‌کند و پاسخ‌هایی شبیه به انسان می‌دهد، نه ربات.
+                      بر خلاف چت‌بات‌های قدیمی، مگالایو مفهوم جملات را درک می‌کند و پاسخ‌هایی شبیه به انسان می‌دهد، نه ربات.
                     </p>
                   </div>
                 </div>

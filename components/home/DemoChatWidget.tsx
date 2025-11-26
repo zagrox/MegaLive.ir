@@ -13,7 +13,7 @@ const DemoChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: 'سلام! 👋 من دستیار هوشمند مگا لایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }
+    { id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }
   ]);
 
   const scrollToBottom = () => {
@@ -74,7 +74,7 @@ const DemoChatWidget: React.FC = () => {
           </div>
         </div>
         <button 
-          onClick={() => setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند مگا لایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }])}
+          onClick={() => setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }])}
           className="text-white/70 hover:text-white transition-colors"
           title="شروع مجدد"
         >
@@ -143,7 +143,7 @@ const DemoChatWidget: React.FC = () => {
         </div>
         <div className="text-center mt-2">
           <p className="text-[10px] text-slate-400 dark:text-slate-500">
-            قدرت گرفته از مگا لایو
+            قدرت گرفته از مگالایو
           </p>
         </div>
       </div>
