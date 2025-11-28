@@ -28,3 +28,15 @@ export interface PricingPlan {
   cta: string;
   popular?: boolean;
 }
+
+export interface BlogPost {
+  id: number;
+  status: string;
+  date_created: string;
+  blog_title: string;
+  blog_summary: string;
+  blog_content: string;
+  blog_image: string;
+  blog_tags: string[];
+  blog_slug: string;
+}

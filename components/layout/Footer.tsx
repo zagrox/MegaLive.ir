@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold text-slate-900 dark:text-white mb-4">شرکت</h3>
             <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
               <li><Link to="/about" className="hover:text-brand-500 transition-colors">درباره ما</Link></li>
-              <li><a href="#" className="hover:text-brand-500 transition-colors">وبلاگ</a></li>
+              <li><Link to="/blog" className="hover:text-brand-500 transition-colors">وبلاگ</Link></li>
               <li><a href="#" className="hover:text-brand-500 transition-colors">فرصت‌های شغلی</a></li>
               <li><Link to="/contact" className="hover:text-brand-500 transition-colors">تماس با ما</Link></li>
             </ul>

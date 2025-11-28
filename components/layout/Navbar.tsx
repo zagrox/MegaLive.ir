@@ -12,6 +12,7 @@ const Navbar: React.FC = () => {
     { name: 'صفحه اصلی', path: '/' },
     { name: 'ویژگی‌ها', path: '/features' },
     { name: 'تعرفه‌ها', path: '/pricing' },
+    { name: 'وبلاگ', path: '/blog' },
   ];
 
   const isActive = (path: string) => {

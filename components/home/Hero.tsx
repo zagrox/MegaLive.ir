@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
               <DemoChatWidget />
               
               {/* Decorative floating elements */}
-              <div className="absolute -right-12 top-28 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 hidden xl:block animate-bounce" style={{ animationDuration: '3s' }}>
+              <div className="absolute -right-12 top-48 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 hidden xl:block animate-bounce" style={{ animationDuration: '3s' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-600">
                     PDF
