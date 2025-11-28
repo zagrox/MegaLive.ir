@@ -34,15 +34,15 @@ const ContactPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">نام شما</label>
-                  <input type="text" id="name" required className="w-full bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition" />
+                  <input type="text" id="name" required className="form-input w-full bg-white dark:bg-slate-800 rounded-lg p-3 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ایمیل</label>
-                  <input type="email" id="email" required className="w-full bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition" />
+                  <input type="email" id="email" required className="form-input w-full bg-white dark:bg-slate-800 rounded-lg p-3 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">پیام شما</label>
-                  <textarea id="message" rows={5} required className="w-full bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition"></textarea>
+                  <textarea id="message" rows={5} required className="form-textarea w-full bg-white dark:bg-slate-800 rounded-lg p-3 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition"></textarea>
                 </div>
                 <button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2">
                   ارسال
