@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BlogPost } from '../types';
-import { Calendar, Tag, ArrowLeft } from 'lucide-react';
+import { Calendar, ArrowLeft } from 'lucide-react';
 
 const API_URL = 'https://crm.megalive.ir/items/blog';
 const ASSETS_URL = 'https://crm.megalive.ir/assets/';

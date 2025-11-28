@@ -2,9 +2,9 @@ import React from 'react';
 import FinalCTA from '../components/home/FinalCTA';
 import { 
   FileText, Sliders, Puzzle, Globe, Database, Lock, 
-  TrendingUp, Headphones, Code, Zap, BarChart3, 
+  TrendingUp, Zap, BarChart3, 
   MessageCircle, Layout, Layers, CheckCircle2, 
-  Settings, Share2, UploadCloud, Palette, Search,
+  Share2, UploadCloud, Palette, Search,
   Bot
 } from 'lucide-react';
 

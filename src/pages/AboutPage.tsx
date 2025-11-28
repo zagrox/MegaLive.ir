@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building, Target, Users, Sparkles } from 'lucide-react';
+import { Target, Sparkles } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const teamMembers = [
