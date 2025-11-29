@@ -12,7 +12,6 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
-import DebugOverlay from './components/DebugOverlay';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -46,7 +45,6 @@ const App: React.FC = () => {
             </Routes>
           </main>
           <Footer />
-          <DebugOverlay />
         </div>
       </Router>
     </ThemeProvider>
