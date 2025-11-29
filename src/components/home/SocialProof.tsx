@@ -6,24 +6,24 @@ const SocialProof: React.FC = () => {
     {
       quote: 'این چت‌بات نرخ تبدیل ما را ۲۵٪ افزایش داد. مشتریان عاشق پاسخ‌های فوری هستند!',
       name: 'سارا رضایی',
-      title: 'مدیر بازاریابی در دیجی‌کالا',
-      avatar: 'https://i.pravatar.cc/150?img=1',
+      title: 'مدیر بازاریابی در زاگرس',
+      avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=200&h=200',
     },
     {
-      quote: 'راه‌اندازی کمتر از ۱۰ دقیقه طول کشید. حالا تیم پشتیبانی ما می‌تواند روی مشکلات پیچیده‌تر تمرکز کند.',
+      quote: 'راه‌اندازی کمتر از ۱۰ دقیقه طول کشید. حالا تیم ما می‌تواند روی مشکلات پیچیده‌تر تمرکز کند.',
       name: 'علی احمدی',
-      title: 'مدیر محصول در اسنپ',
-      avatar: 'https://i.pravatar.cc/150?img=2',
+      title: 'مدیر محصول در برندیار',
+      avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200',
     },
     {
       quote: 'بهترین ابزار برای ساخت پایگاه دانش هوشمند. پشتیبانی از زبان فارسی آن بی‌نظیر است.',
-      name: 'مریم حسینی',
-      title: 'بنیان‌گذار استارتاپ آموزا',
-      avatar: 'https://i.pravatar.cc/150?img=3',
+      name: 'حمید فرجام',
+      title: 'بنیان‌گذار استارتاپ پارسی اپ',
+      avatar: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=200&h=200',
     },
   ];
 
-  const logos = ['دیجی‌کالا', 'اسنپ!', 'کافه بازار', 'همراه اول', 'تپسی'];
+  const logos = ['برندیار', 'سپهرچرم', 'پارت نوین', 'مازیاران', 'زاگرس'];
 
   return (
     <section className="py-20 bg-white dark:bg-slate-950">

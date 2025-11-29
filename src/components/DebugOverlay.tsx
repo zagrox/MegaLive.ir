@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bug, X, Monitor, Moon, Sun, Globe } from 'lucide-react';
+import { Bug, X, Monitor, Moon, Sun, Globe, Activity } from 'lucide-react';
 
 const DebugOverlay: React.FC = () => {
   const [isDebug, setIsDebug] = useState(false);
@@ -28,7 +28,7 @@ const DebugOverlay: React.FC = () => {
         onClick={() => setIsDebug(!isDebug)}
         className={`p-3 rounded-full shadow-lg transition-all border border-slate-200 dark:border-slate-700 ${
           isDebug 
-            ? 'bg-red-500 text-white rotate-0' 
+            ? 'bg-brand-500 text-white rotate-0' 
             : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'
         }`}
         title="ابزار دیباگ (Debug Tool)"
@@ -39,8 +39,8 @@ const DebugOverlay: React.FC = () => {
       {isDebug && (
         <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-slate-800 dark:text-slate-200 p-4 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 min-w-[200px] animate-in slide-in-from-bottom-5 fade-in duration-200">
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-200 dark:border-slate-800">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-            <span className="font-bold text-xs">وضعیت سیستم (System Status)</span>
+            <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></div>
+            <span className="font-bold text-xs">اطلاعات فنی (Debug Info)</span>
           </div>
           
           <div className="space-y-3 text-xs">
@@ -80,10 +80,20 @@ const DebugOverlay: React.FC = () => {
                     <span className="hidden rtl:block text-green-500">RTL</span>
                 </span>
              </div>
+
+             <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2 text-slate-500">
+                    <Activity size={14} />
+                    <span>خطوط راهنما</span>
+                </div>
+                 <span className="font-bold text-brand-600 bg-brand-50 dark:bg-brand-900/30 dark:text-brand-400 px-1.5 py-0.5 rounded text-[10px]">
+                    فعال
+                </span>
+             </div>
           </div>
           
           <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 text-[10px] text-slate-400 text-center">
-            MegaLive Debugger v1.0
+            MegaLive Debugger v1.1
           </div>
         </div>
       )}

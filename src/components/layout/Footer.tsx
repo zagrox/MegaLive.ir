@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-slate-100 dark:border-slate-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-slate-400 text-sm">
-            © ۱۴۰۳ مگالایو. تمامی حقوق محفوظ است.
+            © مگالایو. تمامی حقوق محفوظ است.
           </p>
           <div className="mt-4 md:mt-0 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>

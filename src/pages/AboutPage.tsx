@@ -1,12 +1,27 @@
 import React from 'react';
-import { Target, Sparkles } from 'lucide-react';
+import { Target, Sparkles, Brain, Server, Atom, GitBranch, FileCode, Database, Zap, Search, Terminal, Palette, Container, Bot } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const teamMembers = [
-    { name: 'علی مرادی', role: 'مدیرعامل و بنیان‌گذار', avatar: 'https://i.pravatar.cc/150?img=5' },
-    { name: 'زهرا حسینی', role: 'مدیر فنی (CTO)', avatar: 'https://i.pravatar.cc/150?img=6' },
-    { name: 'رضا قاسمی', role: 'طراح ارشد محصول', avatar: 'https://i.pravatar.cc/150?img=7' },
-    { name: 'فاطمه اکبری', role: 'مدیر بازاریابی', avatar: 'https://i.pravatar.cc/150?img=8' },
+    { name: 'حمید چمانچی', role: 'مدیرعامل و بنیان‌گذار', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400' },
+    { name: 'علی حسن‌پوری', role: 'مدیر فنی (CTO)', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400' },
+    { name: 'رهام کالمرزی', role: 'مدیر پایگاه دانش', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400' },
+    { name: 'سارا رامندی', role: 'مدیر بازاریابی', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400' },
+  ];
+
+  const technologies = [
+    { name: 'Artificial Intelligence', icon: Brain, color: 'text-purple-500' },
+    { name: 'LLM', icon: Bot, color: 'text-emerald-500' },
+    { name: 'Node.js', icon: Server, color: 'text-green-600' },
+    { name: 'React', icon: Atom, color: 'text-blue-500' },
+    { name: 'Git', icon: GitBranch, color: 'text-orange-600' },
+    { name: 'TypeScript', icon: FileCode, color: 'text-blue-600' },
+    { name: 'PostgreSQL', icon: Database, color: 'text-indigo-500' },
+    { name: 'Redis', icon: Zap, color: 'text-red-500' },
+    { name: 'Qdrant', icon: Search, color: 'text-rose-500' },
+    { name: 'Docker', icon: Container, color: 'text-blue-700' },
+    { name: 'Linux', icon: Terminal, color: 'text-slate-600' },
+    { name: 'Tailwind CSS', icon: Palette, color: 'text-cyan-500' },
   ];
 
   return (
@@ -52,7 +67,7 @@ const AboutPage: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <img src="https://picsum.photos/seed/about/600/500" alt="Our team working" className="rounded-2xl shadow-xl w-full h-full object-cover"/>
+              <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80" alt="Artificial Intelligence Technology" className="rounded-2xl shadow-xl w-full h-full object-cover"/>
                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-brand-500 rounded-full -z-10 opacity-30 blur-xl"></div>
                <div className="absolute -top-4 -left-4 w-24 h-24 bg-accent-500 rounded-full -z-10 opacity-30 blur-xl"></div>
             </div>
@@ -60,8 +75,31 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Tech Stack Section */}
+      <section className="py-20 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">تکنولوژی‌های ما</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              زیرساخت قدرتمند مگالایو با استفاده از مدرن‌ترین ابزارهای روز دنیا ساخته شده است.
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-6">
+            {technologies.map((tech) => (
+              <div key={tech.name} className="flex flex-col items-center justify-center w-36 h-36 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-700 hover:-translate-y-1 transition-all duration-300 group">
+                <div className={`p-3 rounded-xl bg-slate-50 dark:bg-slate-900 mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                  <tech.icon className={`h-8 w-8 ${tech.color}`} />
+                </div>
+                <span className="font-bold text-slate-700 dark:text-slate-300 text-sm">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
-      <section className="py-20 bg-slate-50 dark:bg-slate-900">
+      <section className="py-20 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">تیم ما</h2>
