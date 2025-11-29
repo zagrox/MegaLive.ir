@@ -73,7 +73,7 @@ const BlogPage: React.FC = () => {
                   </div>
                   <div className="p-6">
                     <div className="flex flex-wrap gap-2 mb-3">
-                        {post.blog_tags.slice(0, 2).map(tag => (
+                        {(post.blog_tags || []).slice(0, 2).map(tag => (
                             <span key={tag} className="text-xs font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30 px-2 py-1 rounded-full">
                                 {tag}
                             </span>
