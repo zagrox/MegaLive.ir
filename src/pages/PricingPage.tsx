@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FinalCTA from '../components/home/FinalCTA';
-import { Check, HelpCircle, ChevronDown, ChevronUp, Globe, Rocket, ShieldCheck, Loader2 } from 'lucide-react';
+import { Check, HelpCircle, ChevronDown, ChevronUp, Globe, Rocket, ShieldCheck } from 'lucide-react';
 
 interface ApiPlan {
   plan_name: string;
