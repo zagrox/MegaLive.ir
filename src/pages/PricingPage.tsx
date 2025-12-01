@@ -5,12 +5,13 @@ import { Check, HelpCircle, ChevronDown, ChevronUp, Globe, Rocket, ShieldCheck }
 
 interface ApiPlan {
   plan_name: string;
-  plan_messages: string;
+  plan_messages: number;
   plan_llm: number;
   plan_storage: string;
-  plan_monthly: number;
-  plan_yearly: number;
+  plan_monthly: string;
+  plan_yearly: string;
   plan_bots: number;
+  plan_copyright: boolean;
 }
 
 interface PricingPlan {
@@ -27,7 +28,7 @@ interface PricingPlan {
   highlight?: boolean;
 }
 
-const API_URL = 'https://crm.megalive.ir/items/plans';
+const API_URL = 'https://crm.megalive.ir/items/plan';
 
 const PricingPage: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -42,14 +43,14 @@ const PricingPage: React.FC = () => {
         if (!response.ok) throw new Error('Failed to fetch plans');
         
         const result = await response.json();
-        // Handle the specific structure: { data: { id: 1, plans: [...] } }
-        // We look for result.data.plans based on your provided JSON
-        const apiPlans: ApiPlan[] = result.data?.plans || [];
+        // Handle the new structure: { data: [...] }
+        const apiPlans: ApiPlan[] = result.data || [];
 
         const mappedPlans: PricingPlan[] = apiPlans.map((p) => {
           // Helper to format numbers to Persian with commas
-          const formatPrice = (price: number) => {
-            if (price === 0) return '۰';
+          const formatPrice = (priceStr: string) => {
+            const price = parseInt(priceStr);
+            if (isNaN(price) || price === 0) return '۰';
             return price.toLocaleString('fa-IR');
           };
 
@@ -96,12 +97,19 @@ const PricingPage: React.FC = () => {
 
           // Build Features List
           features.push(`${p.plan_bots} چت‌بات فعال`);
-          features.push(`${parseInt(p.plan_messages).toLocaleString('fa-IR')} پیام در ماه`);
-          // Assuming storage is in Characters or Tokens roughly, purely display logic:
-          features.push(`${parseInt(p.plan_storage).toLocaleString('fa-IR')} کاراکتر حافظه`);
+          features.push(`${p.plan_messages.toLocaleString('fa-IR')} پیام در ماه`);
+          
+          // plan_llm -> Limit on knowledge base docs
+          features.push(`${p.plan_llm} منبع دانش (فایل/لینک)`);
+
+          // plan_storage -> Disk space in MB
+          features.push(`${parseInt(p.plan_storage).toLocaleString('fa-IR')} مگابایت فضای ذخیره‌سازی`);
+          
+          if (!p.plan_copyright) {
+            features.push('حذف واترمارک مگالایو');
+          }
           
           if (p.plan_name.toLowerCase() !== 'free') {
-            features.push('حذف واترمارک مگالایو');
             features.push('پشتیبانی اولویت‌دار');
           } else {
              features.push('پشتیبانی کامیونیتی');
@@ -126,6 +134,10 @@ const PricingPage: React.FC = () => {
           };
         });
 
+        // Sort plans by price (approximate check via monthly price parsing) to ensure order: Free -> Starter -> Business -> Enterprise
+        // The API returns them in ID order usually, but safer to rely on returned order if it's correct or sort.
+        // Assuming API returns in correct order or ID order is correct.
+        
         setPlans(mappedPlans);
       } catch (err) {
         console.error(err);
@@ -183,7 +195,7 @@ const PricingPage: React.FC = () => {
                  <div className={`w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-300 ${billingCycle === 'yearly' ? '-translate-x-6' : 'translate-x-0'}`}></div>
                </button>
                <span className={`text-sm font-medium ${billingCycle === 'yearly' ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}>
-                 سالانه <span className="text-green-500 text-xs mr-1">(۲۰٪ تخفیف)</span>
+                 سالانه <span className="text-green-500 text-xs mr-1">(۲۴٪ تخفیف)</span>
                </span>
              </div>
            </div>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, User, Bot, Loader2, Sparkles, RefreshCw } from 'lucide-react';
+import { Send, User, Bot, Loader2, Sparkles, RefreshCw, Headset } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -10,6 +10,7 @@ interface Message {
 const DemoChatWidget: React.FC = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isOperator, setIsOperator] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   
   const [messages, setMessages] = useState<Message[]>([
@@ -40,6 +41,7 @@ const DemoChatWidget: React.FC = () => {
     // Simulate AI response
     setTimeout(() => {
       let botResponseText = 'این یک دموی نمایشی است. در نسخه اصلی، من بر اساس اسناد شما پاسخ خواهم داد.';
+      let switchToOperator = false;
       
       if (input.includes('قیمت') || input.includes('هزینه')) {
         botResponseText = 'ما طرح‌های متنوعی داریم! طرح رایگان برای شروع، و طرح حرفه‌ای برای کسب‌وکارهای رو به رشد.';
@@ -47,6 +49,17 @@ const DemoChatWidget: React.FC = () => {
         botResponseText = 'بله، من کاملاً از زبان شیرین فارسی و همچنین انگلیسی پشتیبانی می‌کنم.';
       } else if (input.includes('نصب') || input.includes('سایت')) {
         botResponseText = 'نصب بسیار ساده است! فقط کافیست یک خط کد جاوااسکریپت را در سایت خود کپی کنید.';
+      } else if (input.includes('اپراتور')) {
+        botResponseText = 'حتما، همکارم سارا هم‌اکنون آنلاین است. شما را به ایشان متصل می‌کنم...';
+        switchToOperator = true;
+      }
+
+      if (switchToOperator) {
+         setTimeout(() => {
+             setIsOperator(true);
+             const opMsg: Message = { id: Date.now() + 2, text: 'سلام، سارا هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' };
+             setMessages(prev => [...prev, opMsg]);
+         }, 1000);
       }
 
       const botMsg: Message = { id: Date.now() + 1, text: botResponseText, sender: 'bot' };
@@ -59,27 +72,34 @@ const DemoChatWidget: React.FC = () => {
     if (e.key === 'Enter') handleSend();
   };
 
+  const resetChat = () => {
+      setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }]);
+      setIsOperator(false);
+  };
+
   return (
-    <div className="w-full max-w-sm md:max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col h-[500px]">
+    <div className="w-full max-w-[350px] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col h-[500px]">
       {/* Header */}
-      <div className="bg-brand-600 p-4 flex items-center justify-between shadow-md">
+      <div className={`${isOperator ? 'bg-indigo-600' : 'bg-brand-600'} p-4 flex items-center justify-between shadow-md transition-colors duration-500`}>
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="bg-white/20 p-2 rounded-full text-white">
-              <Bot className="h-6 w-6" />
+              {isOperator ? <Headset className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
             </div>
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-brand-600 rounded-full"></div>
           </div>
           <div>
-            <h3 className="font-bold text-white text-base">پشتیبان هوشمند</h3>
+            <h3 className="font-bold text-white text-base">
+                {isOperator ? 'سارا رضایی' : 'پشتیبان هوشمند'}
+            </h3>
             <p className="text-brand-100 text-xs flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-brand-200 rounded-full animate-pulse"></span>
-              آنلاین
+              {isOperator ? 'پشتیبانی ویژه' : 'آنلاین'}
             </p>
           </div>
         </div>
         <button 
-          onClick={() => setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }])}
+          onClick={resetChat}
           className="text-white/70 hover:text-white transition-colors"
           title="شروع مجدد"
         >
@@ -98,9 +118,9 @@ const DemoChatWidget: React.FC = () => {
             className={`flex items-end gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-              msg.sender === 'user' ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300' : 'bg-brand-100 text-brand-600'
+              msg.sender === 'user' ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300' : (isOperator ? 'bg-indigo-100 text-indigo-600' : 'bg-brand-100 text-brand-600')
             }`}>
-              {msg.sender === 'user' ? <User className="h-5 w-5" /> : <Sparkles className="h-4 w-4" />}
+              {msg.sender === 'user' ? <User className="h-5 w-5" /> : (isOperator ? <Headset className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />)}
             </div>
             <div
               className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed ${

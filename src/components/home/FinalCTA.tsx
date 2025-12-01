@@ -26,8 +26,8 @@ const FinalCTA: React.FC = () => {
                 <Sparkles className="h-5 w-5" />
                 ساخت رایگان بات
               </a>
-              <Link to="/contact" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-xl font-bold text-lg transition-colors flex items-center justify-center gap-2">
-                تماس با فروش
+              <Link to="/pricing" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-xl font-bold text-lg transition-colors flex items-center justify-center gap-2">
+                مشاهده تعرفه‌ها
                 <ArrowLeft className="h-5 w-5" />
               </Link>
             </div>

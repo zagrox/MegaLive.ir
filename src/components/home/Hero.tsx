@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import DemoChatWidget from './DemoChatWidget';
 
@@ -41,9 +42,9 @@ const Hero: React.FC = () => {
                 رایگان شروع کنید
                 <ArrowLeft className="h-5 w-5" />
               </a>
-              <button className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold text-lg transition-colors">
-                مشاهده دمو
-              </button>
+              <Link to="/pricing" className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold text-lg transition-colors flex items-center justify-center">
+                مشاهده تعرفه‌ها
+              </Link>
             </div>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
@@ -88,6 +89,19 @@ const Hero: React.FC = () => {
                   <div>
                     <p className="text-xs text-slate-500 dark:text-slate-400">نرخ رضایت</p>
                     <p className="text-sm font-bold text-slate-800 dark:text-white">پاسخ‌های صحیح</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Operator Element */}
+               <div className="absolute -right-8 bottom-48 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 hidden xl:block animate-bounce" style={{ animationDuration: '5s', animationDelay: '0.5s' }}>
+                 <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center text-brand-600">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=100&h=100" alt="Operator" className="w-8 h-8 rounded-full" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">اتصال به اپراتور</p>
+                    <p className="text-sm font-bold text-slate-800 dark:text-white">سارا رضایی</p>
                   </div>
                 </div>
               </div>
