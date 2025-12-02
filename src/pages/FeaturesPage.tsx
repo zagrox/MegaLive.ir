@@ -5,7 +5,7 @@ import {
   TrendingUp, Zap, BarChart3, 
   MessageCircle, Layout, Layers, CheckCircle2, 
   Share2, UploadCloud, Palette, Search,
-  Bot
+  Bot, Building2, HardDrive, Cpu, Settings, Power
 } from 'lucide-react';
 
 const FeaturesPage: React.FC = () => {
@@ -49,7 +49,7 @@ const FeaturesPage: React.FC = () => {
                 </div>
                 <div className="mr-3 flex-1 min-w-0">
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">{file.name}</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">{new Date().toLocaleDateString('fa-IR')}</p>
+                  <p className="text-slate-400 mt-0.5 text-[10px]">{new Date().toLocaleDateString('fa-IR')}</p>
                 </div>
                 <div className="shrink-0">
                    {file.status === 'ready' ? (
@@ -201,6 +201,48 @@ const FeaturesPage: React.FC = () => {
       }
   ];
 
+  const botCards = [
+    { name: 'زاگرس', sub: 'زاگرس', calls: '3', space: '1', vector: '1', files: '0', iconBg: 'bg-slate-700', icon: Bot },
+    { name: 'سپهرچرم', sub: 'دستیار هوشمند سپهرچرم', calls: '24', space: '75', vector: '112', files: '4', iconBg: 'bg-emerald-500', icon: Zap },
+    { name: 'پارت نوین', sub: 'دستیار هوشمند پارت نوین', calls: '15', space: '50', vector: '241', files: '4', iconBg: 'bg-orange-500', icon: Building2 },
+    { name: 'مگامیل', sub: 'دستیار هوشمند مگامیل', calls: '30', space: '200', vector: '20', files: '1', iconBg: 'bg-blue-600', icon: Layout },
+  ];
+
+  const RevealOnScroll = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => {
+    const [isVisible, setIsVisible] = React.useState(false);
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div 
+            ref={ref} 
+            className={`transition-all duration-700 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: `${delay}ms` }}
+        >
+            {children}
+        </div>
+    );
+  };
+
   return (
     <div className="pt-20 overflow-hidden">
       {/* Hero Section */}
@@ -227,41 +269,150 @@ const FeaturesPage: React.FC = () => {
       <section className="py-12 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
           {detailedFeatures.map((feature, idx) => (
-            <div key={idx} className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-              {/* Text Content */}
-              <div className="flex-1 text-right">
-                <div className="w-12 h-12 rounded-xl bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-6">
-                    {idx === 0 && <Database className="h-6 w-6" />}
-                    {idx === 1 && <Palette className="h-6 w-6" />}
-                    {idx === 2 && <TrendingUp className="h-6 w-6" />}
+            <RevealOnScroll key={idx}>
+                <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                {/* Text Content */}
+                <div className="flex-1 text-right">
+                    <div className="w-12 h-12 rounded-xl bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-6">
+                        {idx === 0 && <Database className="h-6 w-6" />}
+                        {idx === 1 && <Palette className="h-6 w-6" />}
+                        {idx === 2 && <TrendingUp className="h-6 w-6" />}
+                    </div>
+                    <h3 className="text-brand-500 dark:text-brand-400 font-semibold text-sm tracking-wide uppercase mb-2">
+                    {feature.subtitle}
+                    </h3>
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+                    {feature.title}
+                    </h2>
+                    <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    {feature.description}
+                    </p>
+                    <ul className="space-y-3">
+                    {feature.list.map((item, i) => (
+                        <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-500 flex items-center justify-center">
+                            <CheckCircle2 className="h-3 w-3" />
+                        </div>
+                        {item}
+                        </li>
+                    ))}
+                    </ul>
                 </div>
-                <h3 className="text-brand-500 dark:text-brand-400 font-semibold text-sm tracking-wide uppercase mb-2">
-                  {feature.subtitle}
-                </h3>
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                  {feature.title}
-                </h2>
-                <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                  {feature.description}
-                </p>
-                <ul className="space-y-3">
-                  {feature.list.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-500 flex items-center justify-center">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              {/* Visual Mockup */}
-              <div className="flex-1 w-full flex justify-center perspective-1000">
-                {feature.visual}
-              </div>
-            </div>
+                
+                {/* Visual Mockup */}
+                <div className="flex-1 w-full flex justify-center perspective-1000">
+                    {feature.visual}
+                </div>
+                </div>
+            </RevealOnScroll>
           ))}
+        </div>
+      </section>
+
+      {/* Multi-Bot Management Section */}
+      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+        {/* Abstract Background */}
+        <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+            <div className="absolute top-20 right-20 w-96 h-96 bg-blue-500 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-500 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row gap-12 items-center mb-16">
+            <div className="flex-1">
+                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/50 border border-blue-700 text-blue-300 text-xs font-bold mb-6">
+                    <Building2 className="h-4 w-4" />
+                    ویژه سازمان‌ها و آژانس‌ها
+                </div>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">
+                    مدیریت همزمان <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">چندین چت‌بات</span> در یک پنل
+                </h2>
+                <p className="text-lg text-slate-300 leading-relaxed mb-8">
+                    آیا برای مشتریان مختلف یا دپارتمان‌های متفاوت نیاز به چت‌بات‌های جداگانه دارید؟ 
+                    با پنل مدیریت پیشرفته مگالایو، می‌توانید بی‌نهایت چت‌بات را با تنظیمات، منابع دانش و ظاهر متفاوت به صورت متمرکز مدیریت کنید.
+                </p>
+                <div className="flex flex-col gap-4 text-slate-300">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400"><Layout className="h-4 w-4" /></div>
+                        <span>داشبورد مرکزی برای نظارت بر همه بات‌ها</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400"><Settings className="h-4 w-4" /></div>
+                        <span>تنظیمات اختصاصی برای هر پروژه</span>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Dashboard Visual Grid */}
+            <div className="flex-1 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 perspective-1000">
+                    {botCards.map((bot, i) => (
+                        <RevealOnScroll key={i} delay={i * 100}>
+                            <div className="bg-slate-800/80 backdrop-blur border border-slate-700 rounded-xl p-4 hover:border-slate-500 transition-colors group">
+                                <div className="flex items-start justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-10 h-10 rounded-lg ${bot.iconBg} flex items-center justify-center shadow-lg`}>
+                                            <bot.icon className={`h-6 w-6 ${bot.iconColor || 'text-white'}`} />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white text-sm">{bot.name}</h4>
+                                            <p className="text-[10px] text-slate-400">{bot.sub}</p>
+                                        </div>
+                                    </div>
+                                    <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors cursor-pointer">
+                                        <Settings className="h-4 w-4" />
+                                    </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 gap-2 mb-4">
+                                    <div className="bg-slate-900/50 rounded-lg p-2 border border-slate-700/50">
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400 mb-1">
+                                            <span>مکالمات</span>
+                                            <MessageCircle className="h-3 w-3" />
+                                        </div>
+                                        <span className="text-lg font-bold text-white">{bot.calls}</span>
+                                    </div>
+                                    <div className="bg-slate-900/50 rounded-lg p-2 border border-slate-700/50">
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400 mb-1">
+                                            <span>فضا (MB)</span>
+                                            <HardDrive className="h-3 w-3" />
+                                        </div>
+                                        <span className="text-lg font-bold text-white">{bot.space}</span>
+                                    </div>
+                                    <div className="bg-slate-900/50 rounded-lg p-2 border border-slate-700/50">
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400 mb-1">
+                                            <span>وکتور</span>
+                                            <Cpu className="h-3 w-3" />
+                                        </div>
+                                        <span className="text-lg font-bold text-white">{bot.vector}</span>
+                                    </div>
+                                    <div className="bg-slate-900/50 rounded-lg p-2 border border-slate-700/50">
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400 mb-1">
+                                            <span>فایل‌ها</span>
+                                            <FileText className="h-3 w-3" />
+                                        </div>
+                                        <span className="text-lg font-bold text-white">{bot.files}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-3 border-t border-slate-700">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-4 bg-green-500/20 rounded-full relative cursor-pointer">
+                                            <div className="absolute right-0.5 top-0.5 w-3 h-3 bg-green-500 rounded-full shadow-sm"></div>
+                                        </div>
+                                        <span className="text-[10px] text-green-400 font-bold">فعال</span>
+                                    </div>
+                                    <button className="text-xs bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition-colors">
+                                        مدیریت
+                                    </button>
+                                </div>
+                            </div>
+                        </RevealOnScroll>
+                    ))}
+                </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -296,13 +447,15 @@ const FeaturesPage: React.FC = () => {
             </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {gridFeatures.map((feature, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-950 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 hover:shadow-lg transition-all group">
-                <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center mb-6 text-slate-600 dark:text-slate-300 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                  <feature.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{feature.description}</p>
-              </div>
+                <RevealOnScroll key={idx} delay={idx * 50}>
+                  <div className="bg-white dark:bg-slate-950 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-brand-500 hover:shadow-lg transition-all group h-full">
+                    <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center mb-6 text-slate-600 dark:text-slate-300 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                      <feature.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{feature.description}</p>
+                  </div>
+                </RevealOnScroll>
             ))}
           </div>
         </div>
