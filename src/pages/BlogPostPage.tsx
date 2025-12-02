@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BlogPost } from '../types';
 import { 
-  Calendar, ArrowRight, ArrowLeft, ChevronRight, ChevronLeft, 
-  Clock, Share2, Hash, Sparkles, Layout, Zap, User, Home 
+  Calendar, ArrowRight, ArrowLeft, ChevronLeft, 
+  Clock, Share2, Hash, Sparkles, Layout, Zap, Home 
 } from 'lucide-react';
 
 const API_URL = 'https://crm.megalive.ir/items/blog';
@@ -166,6 +166,11 @@ const BlogPostPage: React.FC = () => {
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 leading-tight">
                         {post.blog_title}
                     </h1>
+
+                    {/* Blog Summary */}
+                    <p className="text-xl text-slate-600 dark:text-slate-300 leading-loose mb-8 font-medium">
+                        {post.blog_summary}
+                    </p>
                     
                     <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800 pb-8">
                         <div className="flex items-center gap-2">
