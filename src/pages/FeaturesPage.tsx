@@ -5,7 +5,7 @@ import {
   TrendingUp, Zap, BarChart3, 
   MessageCircle, Layout, Layers, CheckCircle2, 
   Share2, UploadCloud, Palette, Search,
-  Bot, Building2, HardDrive, Cpu, Settings, Power
+  Bot, Building2, HardDrive, Cpu, Settings
 } from 'lucide-react';
 
 const FeaturesPage: React.FC = () => {
@@ -353,7 +353,7 @@ const FeaturesPage: React.FC = () => {
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
                                         <div className={`w-10 h-10 rounded-lg ${bot.iconBg} flex items-center justify-center shadow-lg`}>
-                                            <bot.icon className={`h-6 w-6 ${bot.iconColor || 'text-white'}`} />
+                                            <bot.icon className="h-6 w-6 text-white" />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-white text-sm">{bot.name}</h4>

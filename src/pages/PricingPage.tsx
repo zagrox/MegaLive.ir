@@ -12,6 +12,7 @@ interface ApiPlan {
   plan_yearly: string;
   plan_bots: number;
   plan_copyright: boolean;
+  plan_vector?: string;
 }
 
 interface PricingPlan {
@@ -28,7 +29,7 @@ interface PricingPlan {
   highlight?: boolean;
 }
 
-const API_URL = 'https://crm.megalive.ir/items/plan';
+const API_URL = 'https://crm.megalive.ir/items/plan?sort=id';
 
 const PricingPage: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -39,12 +40,18 @@ const PricingPage: React.FC = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await fetch(API_URL);
+        // Use no-store to prevent caching of old endpoint responses
+        const response = await fetch(API_URL, { cache: 'no-store' });
         if (!response.ok) throw new Error('Failed to fetch plans');
         
         const result = await response.json();
-        // Handle the new structure: { data: [...] }
-        const apiPlans: ApiPlan[] = result.data || [];
+        
+        // Strict validation to ensure we got an array
+        if (!result.data || !Array.isArray(result.data)) {
+             throw new Error('Invalid data format received from server');
+        }
+
+        const apiPlans: ApiPlan[] = result.data;
 
         const mappedPlans: PricingPlan[] = apiPlans.map((p) => {
           // Helper to format numbers to Persian with commas
@@ -134,9 +141,8 @@ const PricingPage: React.FC = () => {
           };
         });
 
-        // Sort plans by price (approximate check via monthly price parsing) to ensure order: Free -> Starter -> Business -> Enterprise
-        // The API returns them in ID order usually, but safer to rely on returned order if it's correct or sort.
-        // Assuming API returns in correct order or ID order is correct.
+        // Ensure plans are sorted correctly (Free -> Starter -> Business -> Enterprise) if needed,
+        // but ?sort=id usually handles it if IDs are sequential.
         
         setPlans(mappedPlans);
       } catch (err) {
