@@ -97,11 +97,9 @@ const BlogPage: React.FC = () => {
                           </h2>
                       </Link>
                       
-                      <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg mb-8 leading-loose max-w-4xl">
-                          {posts[0].blog_summary}
-                      </p>
+                      {/* Summary removed as requested */}
 
-                      <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
                           <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400">
                               <div className="flex items-center gap-2">
                                   <Calendar className="h-4 w-4" />
@@ -141,13 +139,11 @@ const BlogPage: React.FC = () => {
                                     ))}
                                 </div>
                                 
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 leading-relaxed group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 leading-relaxed group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
                                     {post.blog_title}
                                 </h3>
                                 
-                                <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-loose line-clamp-3 flex-grow">
-                                    {post.blog_summary}
-                                </p>
+                                {/* Summary removed as requested */}
                                 
                                 <div className="mt-auto flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-50 dark:border-slate-800">
                                     <div className="flex items-center gap-1.5">
