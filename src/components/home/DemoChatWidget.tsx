@@ -14,7 +14,7 @@ const DemoChatWidget: React.FC = () => {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }
+    { id: 1, text: 'سلام! 👋 من دستیار هوشمند شما هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }
   ]);
 
   const scrollToBottom = () => {
@@ -73,7 +73,7 @@ const DemoChatWidget: React.FC = () => {
   };
 
   const resetChat = () => {
-      setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند مگالایو هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }]);
+      setMessages([{ id: 1, text: 'سلام! 👋 من دستیار هوشمند شما هستم. چطور می‌تونم کمکتون کنم؟', sender: 'bot' }]);
       setIsOperator(false);
   };
 

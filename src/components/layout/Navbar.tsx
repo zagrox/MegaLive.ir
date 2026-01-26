@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   const navLinks = [
-    { name: 'صفحه اصلی', path: '/' },
+    { name: 'مگالایو', path: '/' },
     { name: 'ویژگی‌ها', path: '/features' },
     { name: 'تعرفه‌ها', path: '/pricing' },
     { name: 'وبلاگ', path: '/blog' },
@@ -32,9 +32,7 @@ const Navbar: React.FC = () => {
               alt="مگالایو" 
               className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
             />
-            <span className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white">
-              مگا<span className="text-brand-500">لایو</span>
-            </span>
+          
           </Link>
 
           {/* Desktop Menu */}

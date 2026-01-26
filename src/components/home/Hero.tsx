@@ -75,8 +75,8 @@ const Hero: React.FC = () => {
                     PDF
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">آپلود فایل</p>
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">Product_Manual.pdf</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">پایگاه دانش</p>
+                    <p className="text-sm font-bold text-slate-800 dark:text-white">آموزش ربات</p>
                   </div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ const Hero: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 dark:text-slate-400">اتصال به اپراتور</p>
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">سارا رضایی</p>
+                    <p className="text-sm font-bold text-slate-800 dark:text-white">تماس هوشمند</p>
                   </div>
                 </div>
               </div>
