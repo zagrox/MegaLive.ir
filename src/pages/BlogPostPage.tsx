@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BlogPost } from '../types';
 import { 
   Calendar, ArrowRight, ArrowLeft, ChevronLeft, 
-  Clock, Share2, Hash, Sparkles, Layout, Zap, Home 
+  Clock, Share2, Hash, Layout, Zap, Home 
 } from 'lucide-react';
 
 const API_URL = 'https://crm.megalive.ir/items/blog';
@@ -34,7 +35,6 @@ const BlogPostPage: React.FC = () => {
       
       try {
         // 1. Fetch current post details
-        // Encode URL components to handle Persian characters in slug correctly
         const encodedSlug = encodeURIComponent(slug);
         const postResponse = await fetch(`${API_URL}?filter[blog_slug][_eq]=${encodedSlug}&timestamp=${Date.now()}`, {
             cache: 'no-store'
@@ -43,7 +43,6 @@ const BlogPostPage: React.FC = () => {
         if (!postResponse.ok) throw new Error('Network response was not ok');
         const postResult = await postResponse.json();
         
-        // Strict validation: Find the exact match in the returned data (in case filter was ignored)
         const matchedPost = postResult.data?.find((p: BlogPost) => p.blog_slug === slug);
 
         if (!matchedPost) {
@@ -51,7 +50,7 @@ const BlogPostPage: React.FC = () => {
         }
         setPost(matchedPost);
 
-        // 2. Fetch list for navigation & sidebar (lightweight: only slug, title, date)
+        // 2. Fetch list for navigation & sidebar
         const listResponse = await fetch(`${API_URL}?fields=blog_title,blog_slug,date_created&sort=-date_created&limit=10`, {
             cache: 'no-store'
         });
@@ -63,12 +62,10 @@ const BlogPostPage: React.FC = () => {
            const currentIndex = allPosts.findIndex(p => p.blog_slug === slug);
            
            if (currentIndex !== -1) {
-             // -1 index is newer (Next), +1 index is older (Previous) because we sorted by -date_created
              setNextPost(currentIndex > 0 ? allPosts[currentIndex - 1] : null);
              setPrevPost(currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null);
            }
 
-           // Set recent posts (excluding current one)
            setRecentPosts(allPosts.filter(p => p.blog_slug !== slug).slice(0, 5));
         }
 
@@ -81,11 +78,9 @@ const BlogPostPage: React.FC = () => {
     };
 
     loadData();
-    // Scroll to top when slug changes
     window.scrollTo(0, 0);
   }, [slug]);
 
-  // Estimate reading time
   const calculateReadingTime = (content: string) => {
     const words = content.split(' ').length;
     return Math.ceil(words / 200) || 5;
@@ -167,15 +162,18 @@ const BlogPostPage: React.FC = () => {
                         {post.blog_title}
                     </h1>
 
-                    {/* Blog Summary */}
                     <p className="text-xl text-slate-600 dark:text-slate-300 leading-loose mb-8 font-medium">
                         {post.blog_summary}
                     </p>
                     
                     <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800 pb-8">
                         <div className="flex items-center gap-2">
-                            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-500 to-accent-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
-                                <Sparkles className="h-5 w-5" />
+                            <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shadow-sm">
+                                <img 
+                                  src="https://crm.megalive.ir/assets/591ec94d-48d1-4748-85bd-c24953d501c0" 
+                                  alt="لوگوی مگالایو" 
+                                  className="w-8 h-8 object-contain"
+                                />
                             </div>
                             <div>
                                 <p className="text-xs text-slate-400 mb-0.5">نویسنده</p>
@@ -219,13 +217,11 @@ const BlogPostPage: React.FC = () => {
                     </div>
                 )}
 
-                {/* Content Parser */}
                 <div className="prose prose-lg dark:prose-invert prose-slate max-w-none text-justify leading-loose selection:bg-brand-100 dark:selection:bg-brand-900">
                     {post.blog_content.split('\n').map((paragraph, index) => {
                         const text = paragraph.trim();
                         if (!text) return null;
 
-                        // 1. Headings (**Title**)
                         if (text.startsWith('**') && !text.includes('1-')) {
                             const cleanTitle = text.replace(/\*\*/g, '');
                             return (
@@ -236,7 +232,6 @@ const BlogPostPage: React.FC = () => {
                             );
                         }
 
-                        // 2. Numbered Lists (1- or 1. or 1-**)
                         const listMatch = text.match(/^(\d+)[\.\-]\s*(.*)/);
                         if (listMatch) {
                             const number = listMatch[1];
@@ -260,7 +255,6 @@ const BlogPostPage: React.FC = () => {
                             );
                         }
 
-                        // 3. Bullet Lists (* text)
                         const bulletMatch = text.match(/^\*\s+(.*)/);
                         if (bulletMatch) {
                             const content = bulletMatch[1];
@@ -281,7 +275,6 @@ const BlogPostPage: React.FC = () => {
                             );
                         }
 
-                        // 4. Standard Paragraph
                         return (
                              <p key={index} className="mb-6 text-slate-600 dark:text-slate-300">
                                 {text.split(/(\*\*.*?\*\*)/g).map((part, i) => {
@@ -295,7 +288,6 @@ const BlogPostPage: React.FC = () => {
                     })}
                 </div>
 
-                {/* Share Section */}
                 <div className="mt-16 py-8 border-t border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
                         <Share2 className="h-5 w-5 text-slate-500" />
@@ -317,9 +309,7 @@ const BlogPostPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Navigation Footer */}
                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Previous (Older) - Right in RTL */}
                     {prevPost ? (
                         <Link to={`/blog/${prevPost.blog_slug}`} className="group relative block p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:shadow-lg">
                             <span className="text-xs font-bold text-slate-400 mb-2 block group-hover:text-brand-500 transition-colors">پست قبلی</span>
@@ -335,7 +325,6 @@ const BlogPostPage: React.FC = () => {
                         </div>
                     )}
 
-                    {/* Next (Newer) - Left in RTL */}
                     {nextPost ? (
                         <Link to={`/blog/${nextPost.blog_slug}`} className="group relative block p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-brand-500 dark:hover:border-brand-500 transition-all hover:shadow-lg text-left">
                             <span className="text-xs font-bold text-slate-400 mb-2 block group-hover:text-brand-500 transition-colors">پست جدیدتر</span>
@@ -353,7 +342,6 @@ const BlogPostPage: React.FC = () => {
                 </div>
             </article>
 
-            {/* Sidebar Column (Sticky) */}
             <aside className="lg:col-span-4 space-y-8 sticky top-24">
                 
                 {/* Author/Brand Widget */}
@@ -362,9 +350,11 @@ const BlogPostPage: React.FC = () => {
                     <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent-500 rounded-full blur-[50px] opacity-20"></div>
                     
                     <div className="relative z-10">
-                        <div className="w-14 h-14 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center text-white mb-6 border border-white/10">
-                            <Sparkles className="h-7 w-7" />
-                        </div>
+                        <img 
+                          src="https://crm.megalive.ir/assets/591ec94d-48d1-4748-85bd-c24953d501c0" 
+                          alt="مگالایو" 
+                          className="h-16 w-auto object-contain mb-6 bg-white/10 backdrop-blur p-2 rounded-xl border border-white/10"
+                        />
                         <h3 className="text-xl font-bold mb-2">مگالایو</h3>
                         <p className="text-sm text-slate-300 mb-6 leading-relaxed opacity-90">
                             پلتفرم ساخت چت‌بات هوشمند فارسی. اسناد خود را آپلود کنید و در چند دقیقه یک دستیار هوشمند بسازید.
@@ -375,7 +365,6 @@ const BlogPostPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Recent Posts Widget */}
                 {recentPosts.length > 0 && (
                     <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
                         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
@@ -401,8 +390,6 @@ const BlogPostPage: React.FC = () => {
                         </div>
                     </div>
                 )}
-                
-                {/* Promo/Tags Widget could go here */}
             </aside>
         </div>
       </div>

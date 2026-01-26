@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -9,10 +10,12 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="bg-brand-500 text-white p-1.5 rounded-md">
-                <Sparkles className="h-5 w-5" />
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="https://crm.megalive.ir/assets/591ec94d-48d1-4748-85bd-c24953d501c0" 
+                alt="مگالایو" 
+                className="h-8 w-auto object-contain"
+              />
               <span className="font-bold text-xl text-slate-800 dark:text-white">
                 مگالایو
               </span>

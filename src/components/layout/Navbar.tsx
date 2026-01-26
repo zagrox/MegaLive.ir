@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const Navbar: React.FC = () => {
@@ -25,10 +26,12 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0 flex items-center gap-2 group">
-            <div className="bg-brand-500 text-white p-2 rounded-lg group-hover:bg-brand-600 transition-colors">
-              <Sparkles className="h-6 w-6" />
-            </div>
+          <Link to="/" className="flex-shrink-0 flex items-center gap-3 group">
+            <img 
+              src="https://crm.megalive.ir/assets/591ec94d-48d1-4748-85bd-c24953d501c0" 
+              alt="مگالایو" 
+              className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            />
             <span className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white">
               مگا<span className="text-brand-500">لایو</span>
             </span>

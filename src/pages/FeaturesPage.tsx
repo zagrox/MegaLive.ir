@@ -1,3 +1,4 @@
+
 import React from 'react';
 import FinalCTA from '../components/home/FinalCTA';
 import { 
@@ -8,241 +9,248 @@ import {
   Bot, Building2, HardDrive, Cpu, Settings
 } from 'lucide-react';
 
-const FeaturesPage: React.FC = () => {
-  const detailedFeatures = [
-    {
-      title: 'پایگاه دانش قدرتمند',
-      subtitle: 'هر فرمتی را به دانش تبدیل کنید',
-      description: 'موتور هوش مصنوعی ما قادر است محتوا را از فایل‌های PDF، مستندات Word، فایل‌های متنی و حتی صفحات وب استخراج کند. تنها کافیست منابع خود را آپلود کنید؛ سیستم به صورت خودکار آن‌ها را پردازش، دسته‌بندی و برای پاسخگویی آماده می‌کند.',
+// FIX: Define RevealOnScrollProps and move component outside FeaturesPage to resolve TypeScript 'key' prop errors.
+interface RevealOnScrollProps {
+  children: React.ReactNode;
+  delay?: number;
+}
+
+const RevealOnScroll: React.FC<RevealOnScrollProps> = ({ children, delay = 0 }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+      const observer = new IntersectionObserver(
+          ([entry]) => {
+              if (entry.isIntersecting) {
+                  setIsVisible(true);
+                  observer.disconnect();
+              }
+          },
+          { threshold: 0.1 }
+      );
+
+      if (ref.current) {
+          observer.observe(ref.current);
+      }
+
+      return () => observer.disconnect();
+  }, []);
+
+  return (
+      <div 
+          ref={ref} 
+          className={`transition-all duration-700 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+          style={{ transitionDelay: `${delay}ms` }}
+      >
+          {children}
+      </div>
+  );
+};
+
+// FIX: Move static data outside the component to prevent re-creation on every render.
+const detailedFeatures = [
+  {
+    title: 'پایگاه دانش قدرتمند',
+    subtitle: 'هر فرمتی را به دانش تبدیل کنید',
+    description: 'موتور هوش مصنوعی ما قادر است محتوا را از فایل‌های PDF، مستندات Word، فایل‌های متنی و حتی صفحات وب استخراج کند. تنها کافیست منابع خود را آپلود کنید؛ سیستم به صورت خودکار آن‌ها را پردازش، دسته‌بندی و برای پاسخگویی آماده می‌کند.',
+    list: [
+      'پشتیبانی از PDF, DOCX, TXT',
+      'خزشگر وب (Web Crawler) برای ایندکس کردن سایت',
+      'بروزرسانی خودکار با تغییر منابع',
+      'پشتیبانی از چندین منبع همزمان'
+    ],
+    visual: (
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-md mx-auto rotate-3 hover:rotate-0 transition-transform duration-500 cursor-default">
+        <div className="flex items-center justify-between mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
+          <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            <Database className="h-4 w-4 text-brand-500" />
+            منابع دانش
+          </h4>
+          <div className="flex gap-2">
+              <button className="bg-slate-100 dark:bg-slate-800 p-1.5 rounded-md text-slate-500">
+                  <Search className="h-3 w-3" />
+              </button>
+              <button className="bg-brand-50 text-brand-600 text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-1">
+                  <UploadCloud className="h-3 w-3" />
+                  افزودن
+              </button>
+          </div>
+        </div>
+        <div className="space-y-3">
+          {[
+            { name: 'Product_Manual_v2.pdf', type: 'PDF', size: '2.4 MB', status: 'ready' },
+            { name: 'https://megalive.ir/pricing', type: 'WEB', size: '12 Pages', status: 'ready' },
+            { name: 'Support_FAQ_Final.docx', type: 'DOC', size: '850 KB', status: 'processing' },
+          ].map((file, i) => (
+            <div key={i} className="flex items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-brand-200 dark:hover:border-brand-900 transition-colors">
+              <div className="w-10 h-10 bg-white dark:bg-slate-700 rounded-lg flex items-center justify-center text-slate-400 shadow-sm shrink-0">
+                {file.type === 'WEB' ? <Globe className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
+              </div>
+              <div className="mr-3 flex-1 min-w-0">
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">{file.name}</p>
+                <p className="text-slate-400 mt-0.5 text-[10px]">{new Date().toLocaleDateString('fa-IR')}</p>
+              </div>
+              <div className="shrink-0">
+                 {file.status === 'ready' ? (
+                   <span className="flex items-center gap-1 text-[10px] font-bold bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded-full border border-green-200 dark:border-green-900">
+                     <CheckCircle2 className="h-3 w-3" /> فعال
+                   </span>
+                 ) : (
+                   <span className="flex items-center gap-1 text-[10px] font-bold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 px-2 py-1 rounded-full border border-yellow-200 dark:border-yellow-900">
+                     <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span> پردازش
+                   </span>
+                 )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  },
+  {
+    title: 'شخصی‌سازی ظاهری',
+    subtitle: 'هماهنگ با برند شما',
+    description: 'ظاهر چت‌بات را کاملاً تغییر دهید. رنگ‌ها را با پالت سازمانی خود ست کنید، لوگوی خود را آپلود کنید و نام و پیام خوش‌آمدگویی بات را تغییر دهید. همه چیز در یک پیش‌نمایش زنده قابل مشاهده است.',
+    list: [
+      'انتخاب رنگ اصلی و فرعی',
+      'تغییر آیکون و آواتار بات',
+      'تنظیم حالت تاریک/روشن',
+      'مکان‌دهی ویجت (چپ/راست)'
+    ],
+    visual: (
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-md mx-auto -rotate-3 hover:rotate-0 transition-transform duration-500 cursor-default">
+          <div className="flex gap-6">
+              {/* Controls */}
+              <div className="flex-1 space-y-4">
+                  <div>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">رنگ برند</label>
+                      <div className="flex gap-2">
+                          <div className="w-6 h-6 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-blue-500 dark:ring-offset-slate-900 cursor-pointer"></div>
+                          <div className="w-6 h-6 rounded-full bg-purple-500 cursor-pointer opacity-40 hover:opacity-100"></div>
+                          <div className="w-6 h-6 rounded-full bg-emerald-500 cursor-pointer opacity-40 hover:opacity-100"></div>
+                          <div className="w-6 h-6 rounded-full bg-rose-500 cursor-pointer opacity-40 hover:opacity-100"></div>
+                      </div>
+                  </div>
+                  <div>
+                       <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">نام بات</label>
+                       <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-300">
+                           دستیار مگالایو
+                       </div>
+                  </div>
+                   <div>
+                       <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">آیکون لانچر</label>
+                       <div className="flex gap-2">
+                           <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-brand-500 text-brand-500"><MessageCircle className="h-4 w-4" /></div>
+                           <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400"><Bot className="h-4 w-4" /></div>
+                           <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400"><Zap className="h-4 w-4" /></div>
+                       </div>
+                  </div>
+              </div>
+              {/* Preview */}
+              <div className="w-32 bg-slate-100 dark:bg-slate-800 rounded-lg p-2 flex flex-col items-center justify-end relative overflow-hidden border border-slate-200 dark:border-slate-700">
+                  <div className="absolute top-0 left-0 w-full h-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700"></div>
+                  <div className="w-full space-y-2 mb-2">
+                      <div className="w-3/4 h-8 bg-white dark:bg-slate-900 rounded-lg rounded-bl-none shadow-sm mr-auto"></div>
+                      <div className="w-3/4 h-12 bg-blue-500 rounded-lg rounded-br-none shadow-sm ml-auto opacity-90"></div>
+                  </div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                      <MessageCircle className="h-4 w-4" />
+                  </div>
+              </div>
+          </div>
+      </div>
+    )
+  },
+  {
+      title: 'آمار و تحلیل',
+      subtitle: 'بینش عمیق از رفتار کاربران',
+      description: 'داشبورد تحلیلی کامل به شما نشان می‌دهد کاربران چه سوالاتی می‌پرسند، چت‌بات چه عملکردی داشته و کجا نیاز به بهبود دارد. مکالمات را مرور کنید و کیفیت پاسخ‌دهی را افزایش دهید.',
       list: [
-        'پشتیبانی از PDF, DOCX, TXT',
-        'خزشگر وب (Web Crawler) برای ایندکس کردن سایت',
-        'بروزرسانی خودکار با تغییر منابع',
-        'پشتیبانی از چندین منبع همزمان'
+        'نمودار تعداد مکالمات روزانه',
+        'تحلیل احساسات (Sentiment Analysis)',
+        'مشاهده تاریخچه کامل چت‌ها',
+        'گزارش کلمات کلیدی پر تکرار'
       ],
       visual: (
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-md mx-auto rotate-3 hover:rotate-0 transition-transform duration-500 cursor-default">
-          <div className="flex items-center justify-between mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
-            <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-              <Database className="h-4 w-4 text-brand-500" />
-              منابع دانش
-            </h4>
-            <div className="flex gap-2">
-                <button className="bg-slate-100 dark:bg-slate-800 p-1.5 rounded-md text-slate-500">
-                    <Search className="h-3 w-3" />
-                </button>
-                <button className="bg-brand-50 text-brand-600 text-[10px] px-2 py-1 rounded-md font-bold flex items-center gap-1">
-                    <UploadCloud className="h-3 w-3" />
-                    افزودن
-                </button>
-            </div>
-          </div>
-          <div className="space-y-3">
-            {[
-              { name: 'Product_Manual_v2.pdf', type: 'PDF', size: '2.4 MB', status: 'ready' },
-              { name: 'https://megalive.ir/pricing', type: 'WEB', size: '12 Pages', status: 'ready' },
-              { name: 'Support_FAQ_Final.docx', type: 'DOC', size: '850 KB', status: 'processing' },
-            ].map((file, i) => (
-              <div key={i} className="flex items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-brand-200 dark:hover:border-brand-900 transition-colors">
-                <div className="w-10 h-10 bg-white dark:bg-slate-700 rounded-lg flex items-center justify-center text-slate-400 shadow-sm shrink-0">
-                  {file.type === 'WEB' ? <Globe className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
-                </div>
-                <div className="mr-3 flex-1 min-w-0">
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">{file.name}</p>
-                  <p className="text-slate-400 mt-0.5 text-[10px]">{new Date().toLocaleDateString('fa-IR')}</p>
-                </div>
-                <div className="shrink-0">
-                   {file.status === 'ready' ? (
-                     <span className="flex items-center gap-1 text-[10px] font-bold bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded-full border border-green-200 dark:border-green-900">
-                       <CheckCircle2 className="h-3 w-3" /> فعال
-                     </span>
-                   ) : (
-                     <span className="flex items-center gap-1 text-[10px] font-bold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 px-2 py-1 rounded-full border border-yellow-200 dark:border-yellow-900">
-                       <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span> پردازش
-                     </span>
-                   )}
-                </div>
+          <div className="flex items-center justify-between mb-6">
+              <div>
+                  <h4 className="font-bold text-slate-800 dark:text-white text-sm">عملکرد ۳۰ روز گذشته</h4>
+                  <p className="text-[10px] text-slate-500">بروزرسانی: ۱ دقیقه پیش</p>
               </div>
-            ))}
+              <BarChart3 className="h-5 w-5 text-slate-400" />
+          </div>
+          
+          <div className="flex gap-2 items-end h-24 mb-6 px-2">
+              {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
+                  <div key={i} className="flex-1 bg-brand-100 dark:bg-brand-900/30 rounded-t-sm relative group">
+                      <div 
+                          style={{ height: `${h}%` }} 
+                          className="absolute bottom-0 left-0 w-full bg-brand-500 rounded-t-sm transition-all duration-500 group-hover:bg-brand-400"
+                      ></div>
+                  </div>
+              ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+              <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                  <p className="text-[10px] text-slate-500 mb-1">کل پیام‌ها</p>
+                  <p className="text-xl font-bold text-slate-800 dark:text-white">۱,۲۴۵</p>
+              </div>
+               <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                  <p className="text-[10px] text-slate-500 mb-1">رضایت کاربران</p>
+                  <p className="text-xl font-bold text-green-500">۹۸٪</p>
+              </div>
           </div>
         </div>
       )
     },
-    {
-      title: 'شخصی‌سازی ظاهری',
-      subtitle: 'هماهنگ با برند شما',
-      description: 'ظاهر چت‌بات را کاملاً تغییر دهید. رنگ‌ها را با پالت سازمانی خود ست کنید، لوگوی خود را آپلود کنید و نام و پیام خوش‌آمدگویی بات را تغییر دهید. همه چیز در یک پیش‌نمایش زنده قابل مشاهده است.',
-      list: [
-        'انتخاب رنگ اصلی و فرعی',
-        'تغییر آیکون و آواتار بات',
-        'تنظیم حالت تاریک/روشن',
-        'مکان‌دهی ویجت (چپ/راست)'
-      ],
-      visual: (
-        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-md mx-auto -rotate-3 hover:rotate-0 transition-transform duration-500 cursor-default">
-            <div className="flex gap-6">
-                {/* Controls */}
-                <div className="flex-1 space-y-4">
-                    <div>
-                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">رنگ برند</label>
-                        <div className="flex gap-2">
-                            <div className="w-6 h-6 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-blue-500 dark:ring-offset-slate-900 cursor-pointer"></div>
-                            <div className="w-6 h-6 rounded-full bg-purple-500 cursor-pointer opacity-40 hover:opacity-100"></div>
-                            <div className="w-6 h-6 rounded-full bg-emerald-500 cursor-pointer opacity-40 hover:opacity-100"></div>
-                            <div className="w-6 h-6 rounded-full bg-rose-500 cursor-pointer opacity-40 hover:opacity-100"></div>
-                        </div>
-                    </div>
-                    <div>
-                         <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">نام بات</label>
-                         <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-300">
-                             دستیار مگالایو
-                         </div>
-                    </div>
-                     <div>
-                         <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5">آیکون لانچر</label>
-                         <div className="flex gap-2">
-                             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-brand-500 text-brand-500"><MessageCircle className="h-4 w-4" /></div>
-                             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400"><Bot className="h-4 w-4" /></div>
-                             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400"><Zap className="h-4 w-4" /></div>
-                         </div>
-                    </div>
-                </div>
-                {/* Preview */}
-                <div className="w-32 bg-slate-100 dark:bg-slate-800 rounded-lg p-2 flex flex-col items-center justify-end relative overflow-hidden border border-slate-200 dark:border-slate-700">
-                    <div className="absolute top-0 left-0 w-full h-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700"></div>
-                    <div className="w-full space-y-2 mb-2">
-                        <div className="w-3/4 h-8 bg-white dark:bg-slate-900 rounded-lg rounded-bl-none shadow-sm mr-auto"></div>
-                        <div className="w-3/4 h-12 bg-blue-500 rounded-lg rounded-br-none shadow-sm ml-auto opacity-90"></div>
-                    </div>
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg">
-                        <MessageCircle className="h-4 w-4" />
-                    </div>
-                </div>
-            </div>
-        </div>
-      )
+];
+
+const gridFeatures = [
+  {
+    icon: Sliders,
+    title: 'تنظیمات پیشرفته هوش مصنوعی',
+    description: 'مدل زبانی (GPT-4 یا GPT-3.5)، دمای پاسخگویی و دستورات سیستمی (System Prompt) را برای کنترل دقیق رفتار بات تنظیم کنید.'
+  },
+  {
+    icon: Puzzle,
+    title: 'API قدرتمند',
+    description: 'با استفاده از REST API ما، قابلیت‌های چت‌بات را به اپلیکیشن موبایل یا نرم‌افزارهای داخلی شرکت خود اضافه کنید.'
+  },
+  {
+    icon: Globe,
+    title: 'پشتیبانی چندزبانه',
+    description: 'به مشتریان بین‌المللی خود به زبان مادری‌شان پاسخ دهید. تشخیص و ترجمه خودکار برای بیش از ۹۰ زبان.'
+  },
+  {
+    icon: Lock,
+    title: 'امنیت و حریم خصوصی',
+    description: 'داده‌های شما رمزنگاری شده و در سرورهای امن نگهداری می‌شوند. امکان حذف کامل داده‌ها در هر زمان وجود دارد.'
+  },
+  {
+      icon: Layout,
+      title: 'Embed قابل تنظیم',
+      description: 'ویجت چت را به صورت پاپ‌آپ، تمام صفحه یا تعبیه شده در بدنه (Iframe) در سایت خود قرار دهید.'
     },
     {
-        title: 'آمار و تحلیل',
-        subtitle: 'بینش عمیق از رفتار کاربران',
-        description: 'داشبورد تحلیلی کامل به شما نشان می‌دهد کاربران چه سوالاتی می‌پرسند، چت‌بات چه عملکردی داشته و کجا نیاز به بهبود دارد. مکالمات را مرور کنید و کیفیت پاسخ‌دهی را افزایش دهید.',
-        list: [
-          'نمودار تعداد مکالمات روزانه',
-          'تحلیل احساسات (Sentiment Analysis)',
-          'مشاهده تاریخچه کامل چت‌ها',
-          'گزارش کلمات کلیدی پر تکرار'
-        ],
-        visual: (
-          <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 w-full max-w-md mx-auto rotate-3 hover:rotate-0 transition-transform duration-500 cursor-default">
-            <div className="flex items-center justify-between mb-6">
-                <div>
-                    <h4 className="font-bold text-slate-800 dark:text-white text-sm">عملکرد ۳۰ روز گذشته</h4>
-                    <p className="text-[10px] text-slate-500">بروزرسانی: ۱ دقیقه پیش</p>
-                </div>
-                <BarChart3 className="h-5 w-5 text-slate-400" />
-            </div>
-            
-            <div className="flex gap-2 items-end h-24 mb-6 px-2">
-                {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-                    <div key={i} className="flex-1 bg-brand-100 dark:bg-brand-900/30 rounded-t-sm relative group">
-                        <div 
-                            style={{ height: `${h}%` }} 
-                            className="absolute bottom-0 left-0 w-full bg-brand-500 rounded-t-sm transition-all duration-500 group-hover:bg-brand-400"
-                        ></div>
-                    </div>
-                ))}
-            </div>
+      icon: Share2,
+      title: 'اشتراک‌گذاری آسان',
+      description: 'چت‌بات خود را با یک لینک عمومی کوتاه با دیگران به اشتراک بگذارید، حتی اگر وب‌سایت ندارید.'
+    }
+];
 
-            <div className="grid grid-cols-2 gap-3">
-                <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                    <p className="text-[10px] text-slate-500 mb-1">کل پیام‌ها</p>
-                    <p className="text-xl font-bold text-slate-800 dark:text-white">۱,۲۴۵</p>
-                </div>
-                 <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                    <p className="text-[10px] text-slate-500 mb-1">رضایت کاربران</p>
-                    <p className="text-xl font-bold text-green-500">۹۸٪</p>
-                </div>
-            </div>
-          </div>
-        )
-      },
-  ];
+const botCards = [
+  { name: 'زاگرس', sub: 'زاگرس', calls: '3', space: '1', vector: '1', files: '0', iconBg: 'bg-slate-700', icon: Bot },
+  { name: 'سپهرچرم', sub: 'دستیار هوشمند سپهرچرم', calls: '24', space: '75', vector: '112', files: '4', iconBg: 'bg-emerald-500', icon: Zap },
+  { name: 'پارت نوین', sub: 'دستیار هوشمند پارت نوین', calls: '15', space: '50', vector: '241', files: '4', iconBg: 'bg-orange-500', icon: Building2 },
+  { name: 'مگامیل', sub: 'دستیار هوشمند مگامیل', calls: '30', space: '200', vector: '20', files: '1', iconBg: 'bg-blue-600', icon: Layout },
+];
 
-  const gridFeatures = [
-    {
-      icon: Sliders,
-      title: 'تنظیمات پیشرفته هوش مصنوعی',
-      description: 'مدل زبانی (GPT-4 یا GPT-3.5)، دمای پاسخگویی و دستورات سیستمی (System Prompt) را برای کنترل دقیق رفتار بات تنظیم کنید.'
-    },
-    {
-      icon: Puzzle,
-      title: 'API قدرتمند',
-      description: 'با استفاده از REST API ما، قابلیت‌های چت‌بات را به اپلیکیشن موبایل یا نرم‌افزارهای داخلی شرکت خود اضافه کنید.'
-    },
-    {
-      icon: Globe,
-      title: 'پشتیبانی چندزبانه',
-      description: 'به مشتریان بین‌المللی خود به زبان مادری‌شان پاسخ دهید. تشخیص و ترجمه خودکار برای بیش از ۹۰ زبان.'
-    },
-    {
-      icon: Lock,
-      title: 'امنیت و حریم خصوصی',
-      description: 'داده‌های شما رمزنگاری شده و در سرورهای امن نگهداری می‌شوند. امکان حذف کامل داده‌ها در هر زمان وجود دارد.'
-    },
-    {
-        icon: Layout,
-        title: 'Embed قابل تنظیم',
-        description: 'ویجت چت را به صورت پاپ‌آپ، تمام صفحه یا تعبیه شده در بدنه (Iframe) در سایت خود قرار دهید.'
-      },
-      {
-        icon: Share2,
-        title: 'اشتراک‌گذاری آسان',
-        description: 'چت‌بات خود را با یک لینک عمومی کوتاه با دیگران به اشتراک بگذارید، حتی اگر وب‌سایت ندارید.'
-      }
-  ];
-
-  const botCards = [
-    { name: 'زاگرس', sub: 'زاگرس', calls: '3', space: '1', vector: '1', files: '0', iconBg: 'bg-slate-700', icon: Bot },
-    { name: 'سپهرچرم', sub: 'دستیار هوشمند سپهرچرم', calls: '24', space: '75', vector: '112', files: '4', iconBg: 'bg-emerald-500', icon: Zap },
-    { name: 'پارت نوین', sub: 'دستیار هوشمند پارت نوین', calls: '15', space: '50', vector: '241', files: '4', iconBg: 'bg-orange-500', icon: Building2 },
-    { name: 'مگامیل', sub: 'دستیار هوشمند مگامیل', calls: '30', space: '200', vector: '20', files: '1', iconBg: 'bg-blue-600', icon: Layout },
-  ];
-
-  const RevealOnScroll = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
-    const ref = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <div 
-            ref={ref} 
-            className={`transition-all duration-700 transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-            style={{ transitionDelay: `${delay}ms` }}
-        >
-            {children}
-        </div>
-    );
-  };
-
+const FeaturesPage: React.FC = () => {
   return (
     <div className="pt-20 overflow-hidden">
       {/* Hero Section */}
