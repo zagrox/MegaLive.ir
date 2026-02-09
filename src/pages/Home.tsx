@@ -6,7 +6,7 @@ import FinalCTA from '../components/home/FinalCTA';
 import SocialProof from '../components/home/SocialProof';
 import UseCases from '../components/home/UseCases';
 import Integrations from '../components/home/Integrations';
-import { MessageSquare, ShieldCheck, Zap, BarChart, Check, Users, Activity, ExternalLink, MousePointer2, Sparkles, Brain, Database, Cpu } from 'lucide-react';
+import { MessageSquare, ShieldCheck, Zap, Activity, ExternalLink, MousePointer2, Sparkles, Brain, Database, Cpu } from 'lucide-react';
 
 const Home: React.FC = () => {
   return (
